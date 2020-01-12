@@ -7,5 +7,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div>
-    <p>Autor: Paweł Sosulski, <%=LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)%></p>
+    <p><b>Skills collector</b> Autor: <i>Paweł Sosulski, </i> <%=LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)%></p>
 </div>

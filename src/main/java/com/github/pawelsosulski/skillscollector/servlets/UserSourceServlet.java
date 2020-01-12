@@ -1,8 +1,7 @@
 package com.github.pawelsosulski.skillscollector.servlets;
 
-import com.github.pawelsosulski.skillscollector.entity.Source;
+import com.github.pawelsosulski.skillscollector.entity.Skill;
 import com.github.pawelsosulski.skillscollector.entity.User;
-import com.github.pawelsosulski.skillscollector.dao.SourceDao;
 import com.github.pawelsosulski.skillscollector.dao.UserDao;
 import org.hibernate.SessionFactory;
 
@@ -12,31 +11,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-@WebServlet("/user/unknown-sources")
-public class UnknownSourceServlet extends HttpServlet {
+@WebServlet("/user/skills")
+public class UserSourceServlet extends HttpServlet {
     private UserDao userDao;
-    private SourceDao sourceDao;
+
     @Override
     public void init() throws ServletException {
         userDao = new UserDao((SessionFactory) getServletContext().getAttribute("session_factory"));
-        sourceDao= new SourceDao((SessionFactory) getServletContext().getAttribute("session_factory"));
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User)req.getSession().getAttribute("user");
-        List<Source> allSource = sourceDao.getAllWithSkills2();
-       // List<Source> allSource = sourceDao.getAll();
+        List<Skill> userSkills = userDao.getUserSkills(user);
 
-        List<Source> userSource = userDao.getUserSource(user);
-        userSource.forEach(s -> {
-            if (allSource.contains(s)) {
-                allSource.remove(s);
+        Map<String,Integer> mapSkill=userSkills.stream().collect(Collectors.toMap(s -> s.getName(),i ->1,(v,v2)->v+1));
+    /*    userSkills.forEach(s -> {
+            if (mapSkill.containsKey(s)) {
+                Integer value = mapSkill.get(s);
+                value = value + 1;
+            } else {
+                mapSkill.put(s.getName(),new Integer(1));
             }
-        });
-        req.setAttribute("userUnknownSource",allSource);
-        req.getRequestDispatcher("/WEB-INF/views/user-unknown-sources.jsp").forward(req,resp);
+        });*/
+        req.setAttribute("userSkills",mapSkill);
+
+        req.getRequestDispatcher("/WEB-INF/views/user-skills.jsp").forward(req,resp);
     }
 }

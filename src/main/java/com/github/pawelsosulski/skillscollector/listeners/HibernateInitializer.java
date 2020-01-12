@@ -1,8 +1,8 @@
 package com.github.pawelsosulski.skillscollector.listeners;
 
-import com.github.pawelsosulski.skillscollector.model.Skill;
-import com.github.pawelsosulski.skillscollector.model.Source;
-import com.github.pawelsosulski.skillscollector.model.User;
+import com.github.pawelsosulski.skillscollector.entity.Skill;
+import com.github.pawelsosulski.skillscollector.entity.Source;
+import com.github.pawelsosulski.skillscollector.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -12,7 +12,6 @@ import org.hibernate.service.ServiceRegistry;
 import javax.servlet.*;
 import javax.servlet.annotation.WebListener;
 import java.util.Properties;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

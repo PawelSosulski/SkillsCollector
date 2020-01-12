@@ -22,8 +22,9 @@ public class AuthorizationFilter extends HttpFilter {
         Set<String> protectedLink = new HashSet<>();
         protectedLink.add("/user/skills");
         protectedLink.add("/user/sources");
-        protectedLink.add("/user/uknown-sources");
+        protectedLink.add("/user/unknown-sources");
         protectedLink.add("/logout");
+        protectedLink.add("/sources/confirm");
         String servletPath = req.getServletPath();
 
         if (unprotectedLink.contains(servletPath)) {
@@ -31,19 +32,8 @@ public class AuthorizationFilter extends HttpFilter {
         } else if (protectedLink.contains(servletPath) && req.getSession().getAttribute("user") != null) {
             chain.doFilter(req,res);
         } else {
-            System.out.println("dałeś ciała mieciu");
             res.sendRedirect("/login");
         }
 
-       /* if (protectedLink.contains(servletPath) && req.getSession().getAttribute("user") != null) {
-            req.getRequestDispatcher("/login").forward(req, res);
-            chain.doFilter(req, res);
-        } else if (!unprotectedLink.contains(servletPath)) {
-            System.out.println("dałeś ciała mieciu");
-            req.getRequestDispatcher("/login").forward(req, res);
-        }else {
-            chain.doFilter(req, res);
-        }
-*/
     }
 }

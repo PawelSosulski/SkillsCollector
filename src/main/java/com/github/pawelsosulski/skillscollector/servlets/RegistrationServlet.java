@@ -1,8 +1,7 @@
 package com.github.pawelsosulski.skillscollector.servlets;
 
-import com.github.pawelsosulski.skillscollector.model.User;
-import com.github.pawelsosulski.skillscollector.model.dao.UserDao;
-import org.hibernate.Session;
+import com.github.pawelsosulski.skillscollector.entity.User;
+import com.github.pawelsosulski.skillscollector.dao.UserDao;
 import org.hibernate.SessionFactory;
 
 import javax.servlet.ServletException;

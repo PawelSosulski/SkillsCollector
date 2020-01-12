@@ -1,6 +1,6 @@
-package com.github.pawelsosulski.skillscollector.model.dao;
+package com.github.pawelsosulski.skillscollector.dao;
 
-import com.github.pawelsosulski.skillscollector.model.Skill;
+import com.github.pawelsosulski.skillscollector.entity.Skill;
 
 import org.hibernate.SessionFactory;
 

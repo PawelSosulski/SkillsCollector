@@ -1,8 +1,10 @@
-package com.github.pawelsosulski.skillscollector.model.dao;
+package com.github.pawelsosulski.skillscollector.dao;
 
-import com.github.pawelsosulski.skillscollector.model.Source;
-import com.github.pawelsosulski.skillscollector.model.User;
+import com.github.pawelsosulski.skillscollector.entity.Skill;
+import com.github.pawelsosulski.skillscollector.entity.Source;
+import com.github.pawelsosulski.skillscollector.entity.User;
 import org.hibernate.SessionFactory;
+
 import java.util.List;
 
 public class UserDao extends BaseDao {
@@ -56,7 +58,7 @@ public class UserDao extends BaseDao {
                         .getResultList());
     }
 
-    public void confirmSource(User user, Source source ){
+    public void confirmSource(User user, Source source) {
         super.executeInTransaction(
                 session -> {
                     User merged = (User) session.merge(user);
@@ -65,4 +67,26 @@ public class UserDao extends BaseDao {
                 }
         );
     }
+
+    public List<Skill> getUserSkills(User user) {
+        return super.produceInTransaction(session ->
+                session.createQuery("SELECT s FROM User u JOIN u.knownSource kS JOIN kS.attachedSkills s WHERE u.id=:id", Skill.class)
+                        .setParameter("id", user.getId())
+                        .getResultList());
+    }
+
+    public List<Source> getUserSource(User user) {
+        return super.produceInTransaction(session ->
+                session.createQuery("SELECT kS FROM User u JOIN u.knownSource kS WHERE u.id=:id", Source.class)
+                        .setParameter("id", user.getId())
+                        .getResultList());
+    }
+
+    public List<Source> getUserSourceWithSkills(User user) {
+        return super.produceInTransaction(session -> session.createQuery("SELECT DISTINCT ks FROM User u Join u.knownSource ks JOIN FETCH ks.attachedSkills WHERE u.id=:id", Source.class)
+                .setParameter("id", user.getId())
+                .getResultList());
+    }
+
+
 }

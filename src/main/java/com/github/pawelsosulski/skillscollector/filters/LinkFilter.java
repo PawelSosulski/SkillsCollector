@@ -16,8 +16,6 @@ public class LinkFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String servletPath = req.getServletPath();
-        System.out.println();
-        System.out.println(servletPath);
         Set<String> hiddenLinks = new HashSet<>();
         if("/register".equalsIgnoreCase(servletPath)) {
             hiddenLinks.add("/register");

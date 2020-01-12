@@ -1,4 +1,4 @@
-package com.github.pawelsosulski.skillscollector.model;
+package com.github.pawelsosulski.skillscollector.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -50,6 +50,7 @@ public class Source {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public List<Skill> getAttachedSkills() {
         return attachedSkills;

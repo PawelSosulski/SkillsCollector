@@ -1,4 +1,4 @@
-package com.github.pawelsosulski.skillscollector.model.dao;
+package com.github.pawelsosulski.skillscollector.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,15 +21,20 @@ public class BaseDao {
     protected <R> R produceInTransaction(Function<Session, R> function) {
         Transaction transaction = null;
         R result = null;
-        try (Session session = sessionFactory.openSession()) {
+        try {
+              try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             result = function.apply(session);
             transaction.commit();
         } catch (Exception ex) {
+            ex.printStackTrace();
             log.log(Level.SEVERE, "Błąd wykonania executeInTransaction", ex);
             if (transaction != null) {
                 transaction.rollback();
             }
+        }}
+      catch (Throwable t){
+          t.printStackTrace();
         }
         return result;
     }

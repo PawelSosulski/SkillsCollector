@@ -1,7 +1,6 @@
-package com.github.pawelsosulski.skillscollector.model;
+package com.github.pawelsosulski.skillscollector.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -49,10 +48,7 @@ public class Skill {
 
     @Override
     public String toString() {
-        return "Skill{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }
 

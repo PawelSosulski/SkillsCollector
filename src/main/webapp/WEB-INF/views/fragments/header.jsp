@@ -8,6 +8,7 @@
             <a href="/user/sources">Źródła wiedzy</a>
             <a href="/user/unknown-sources">Nieznane źródła wiedzy</a>
             <a href="/logout">logout</a>
+            <span> Witaj ${user.firstName}!</span>
         </c:when>
         <c:otherwise>
             <c:if test="${!hiddenLinks.contains('/register')}">
@@ -21,9 +22,4 @@
     </c:choose>
 
 
-</div>
-<div>
-    <c:if test="${user != null}">
-        <br><span>Witaj ${user.firstName}!</span><br><br>
-    </c:if>
 </div>
