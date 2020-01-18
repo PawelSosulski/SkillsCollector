@@ -11,11 +11,13 @@
 <h3>Źródła wiedzy do nauki dla ${user.firstName} ${user.lastName}</h3>
 
 <table>
-    <th>Lp.</th>
-    <th>Nazwa źródła</th>
-    <th>Opis źródła</th>
-    <th>Umiejętności z źródła</th>
-    <th>Potwierdz umiejętność</th>
+    <tr>
+        <th>Lp.</th>
+        <th>Nazwa źródła</th>
+        <th>Opis źródła</th>
+        <th>Umiejętności z źródła</th>
+        <th>Potwierdz umiejętność</th>
+    </tr>
     <c:forEach items="${userUnknownSource}" var="source" varStatus="stat">
         <tr>
             <td>${stat.count}</td>
@@ -30,7 +32,7 @@
             </td>
             <td>
                 <c:url value="/sources/confirm" var="confirmUrl">
-                <c:param name="sourceId" value="${source.id}"/>
+                    <c:param name="sourceId" value="${source.id}"/>
                 </c:url>
                 <a href="${confirmUrl}">Accept</a>
             </td>

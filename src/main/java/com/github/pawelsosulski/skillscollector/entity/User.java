@@ -1,5 +1,7 @@
 package com.github.pawelsosulski.skillscollector.entity;
 
+import com.github.pawelsosulski.skillscollector.helpers.UserRole;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -23,6 +25,18 @@ public class User {
 
     @Column(nullable = false, name="username")
     private String username;
+
+    @Column(name="role",nullable = true)
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 
     @ManyToMany
     @JoinTable(name = "users_known_sources", joinColumns = @JoinColumn(name = "user_id")

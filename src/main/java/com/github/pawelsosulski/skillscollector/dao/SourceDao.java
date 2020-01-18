@@ -32,15 +32,16 @@ public class SourceDao extends BaseDao {
                 .getResultList());
     }
 
+
     public List<Source> getAllWithSkills(){
-        return super.produceInTransaction(session -> session.createQuery("SELECT s FROM Source s fetch all properties",Source.class)
-                .getResultList());
-    }
-
-    public List<Source> getAllWithSkills2(){
-        return super.produceInTransaction(session -> session.createQuery("SELECT DISTINCT s FROM Source s JOIN FETCH s.attachedSkills",Source.class)
+        return super.produceInTransaction(session -> session.createQuery("SELECT DISTINCT s FROM Source s LEFT JOIN FETCH s.attachedSkills",Source.class)
                 .getResultList());
     }
 
 
+    public List<Source> getWithSkills(Long id) {
+        return super.produceInTransaction(session -> session.createQuery("SELECT DISTINCT s FROM Source s LEFT JOIN FETCH s.attachedSkills WHERE s.id =:id",Source.class)
+                .setParameter("id",id)
+                .getResultList());
+    }
 }

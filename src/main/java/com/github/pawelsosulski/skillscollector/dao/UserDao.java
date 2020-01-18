@@ -5,6 +5,7 @@ import com.github.pawelsosulski.skillscollector.entity.Source;
 import com.github.pawelsosulski.skillscollector.entity.User;
 import org.hibernate.SessionFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class UserDao extends BaseDao {
@@ -88,5 +89,23 @@ public class UserDao extends BaseDao {
                 .getResultList());
     }
 
+    public List<User> getAllUserWithSource(Source source) {
+        return super.produceInTransaction(session -> session
+                .createQuery("SELECT u FROM User u JOIN u.knownSource kS WITH kS.id=:id",User.class)
+                .setParameter("id",source.getId())
+                .getResultList());
+    }
 
+    public List<Skill> getAllUsersSkills() {
+    return super.produceInTransaction(session -> session
+            .createQuery("SELECT s FROM User u JOIN u.knownSource ks JOIN ks.attachedSkills s",Skill.class)
+            .getResultList());
+    }
+
+    public List<Source> getAllUsersSource() {
+        return super.produceInTransaction(session -> session
+        .createQuery("Select ks FROM User u JOIN u.knownSource ks",Source.class)
+        .getResultList());
+
+    }
 }

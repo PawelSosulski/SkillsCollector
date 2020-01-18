@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/user/unknown-sources")
-public class UnknownSourceServlet extends HttpServlet {
+public class UserUnknownSourceServlet extends HttpServlet {
     private UserDao userDao;
     private SourceDao sourceDao;
     @Override
@@ -27,7 +27,7 @@ public class UnknownSourceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User)req.getSession().getAttribute("user");
-        List<Source> allSource = sourceDao.getAllWithSkills2();
+        List<Source> allSource = sourceDao.getAllWithSkills();
        // List<Source> allSource = sourceDao.getAll();
 
         List<Source> userSource = userDao.getUserSource(user);

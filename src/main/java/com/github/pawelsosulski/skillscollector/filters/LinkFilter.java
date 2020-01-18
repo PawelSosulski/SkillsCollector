@@ -17,15 +17,19 @@ public class LinkFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String servletPath = req.getServletPath();
         Set<String> hiddenLinks = new HashSet<>();
-        if("/register".equalsIgnoreCase(servletPath)) {
+        if ("/".equalsIgnoreCase(servletPath)) {
             hiddenLinks.add("/register");
-        }
-        if ("/login".equalsIgnoreCase(servletPath)) {
             hiddenLinks.add("/login");
+        } else {
+            if ("/register".equalsIgnoreCase(servletPath)) {
+                hiddenLinks.add("/register");
+            }
+            if ("/login".equalsIgnoreCase(servletPath)) {
+                hiddenLinks.add("/login");
+            }
         }
-
-        req.setAttribute("hiddenLinks",hiddenLinks);
-        chain.doFilter(req,res);
+        req.setAttribute("hiddenLinks", hiddenLinks);
+        chain.doFilter(req, res);
 
     }
 }

@@ -18,6 +18,7 @@ public class AuthorizationFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         Set<String> unprotectedLink = new HashSet<>();
         unprotectedLink.add("/login");
+        unprotectedLink.add("/");
         unprotectedLink.add("/register");
         Set<String> protectedLink = new HashSet<>();
         protectedLink.add("/user/skills");
@@ -25,6 +26,12 @@ public class AuthorizationFilter extends HttpFilter {
         protectedLink.add("/user/unknown-sources");
         protectedLink.add("/logout");
         protectedLink.add("/sources/confirm");
+        protectedLink.add("/admin/source-manage");
+        protectedLink.add("/admin/source-add");
+        protectedLink.add("/admin/source-edit");
+        protectedLink.add("/admin/source-remove");
+        protectedLink.add("/admin/skill-manage");
+        protectedLink.add("/admin/skill-addOrEdit");
         String servletPath = req.getServletPath();
 
         if (unprotectedLink.contains(servletPath)) {
@@ -32,7 +39,7 @@ public class AuthorizationFilter extends HttpFilter {
         } else if (protectedLink.contains(servletPath) && req.getSession().getAttribute("user") != null) {
             chain.doFilter(req,res);
         } else {
-            res.sendRedirect("/login");
+            res.sendRedirect("/");
         }
 
     }

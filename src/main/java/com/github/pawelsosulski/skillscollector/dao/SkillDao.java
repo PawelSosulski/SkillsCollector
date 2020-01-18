@@ -4,6 +4,8 @@ import com.github.pawelsosulski.skillscollector.entity.Skill;
 
 import org.hibernate.SessionFactory;
 
+import java.util.List;
+
 public class SkillDao extends BaseDao {
     public SkillDao(SessionFactory sessionFactory) {
         super(sessionFactory);
@@ -25,4 +27,15 @@ public class SkillDao extends BaseDao {
         super.executeInTransaction(session -> session.delete(skill));
     }
 
+    public List<Skill> getAll() {
+        return super.produceInTransaction(session ->
+                session.createQuery("Select s from Skill s",Skill.class).getResultList());
+    }
+
+    public List<Skill> getAllByIds(List<Long> skillsId) {
+        return super.produceInTransaction(session ->
+                session.createQuery("Select s from Skill s Where s.id in (:ids)",Skill.class)
+                .setParameter("ids",skillsId)
+                .getResultList());
+    }
 }

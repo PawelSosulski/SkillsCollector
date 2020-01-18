@@ -2,6 +2,7 @@ package com.github.pawelsosulski.skillscollector.servlets;
 
 import com.github.pawelsosulski.skillscollector.entity.User;
 import com.github.pawelsosulski.skillscollector.dao.UserDao;
+import com.github.pawelsosulski.skillscollector.helpers.UserRole;
 import org.hibernate.SessionFactory;
 
 import javax.servlet.ServletException;
@@ -39,6 +40,7 @@ public class RegistrationServlet extends HttpServlet {
         newUser.setLastName(lastName);
         newUser.setPassword(password);
         newUser.setUsername(login);
+        newUser.setRole(UserRole.BASIC);
         if (userDao.getAllByUsername(login).size() == 0) {
             userDao.save(newUser);
             resp.sendRedirect("/login");
